@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Lfg.Pms.Code
 {
+    /// <summary>
+    /// 单例，缓存。
+    /// </summary>
+    /// <typeparam name="TIn"></typeparam>
+    /// <typeparam name="TOut"></typeparam>
     public static class TransObj<TIn, TOut> where TOut:new()
     {
         private static readonly Func<TIn, TOut> cache = GetFunc();
