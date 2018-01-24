@@ -12,6 +12,7 @@ namespace Lfg.Pms.Code
         private static readonly Func<TIn, TOut> cache = GetFunc();
         private static Func<TIn, TOut> GetFunc()
         {
+            //参数表达式
             ParameterExpression parameterExpression = Expression.Parameter(typeof(TIn), "p");
             List<MemberBinding> memberBindingList = new List<MemberBinding>();
 
@@ -37,4 +38,4 @@ namespace Lfg.Pms.Code
         }
     }
 
-}
+}       
