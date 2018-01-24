@@ -10,5 +10,7 @@ namespace TransConsoleApp5
     {
         public string id { get; set; }
         public string name { get; set; }
+        
+        public string personId { get; set; }
     }
 }

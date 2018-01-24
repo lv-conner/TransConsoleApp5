@@ -14,8 +14,8 @@ namespace TransConsoleApp5
             var p = new Person()
             {
                 name="Tim",
-                id="00010"
-
+                id="00010",
+                personId="p1"
             };
 
             var student = new Student()
@@ -28,7 +28,7 @@ namespace TransConsoleApp5
             Person person = TransObj<Student, Person>.Trans(student);
             //Console.WriteLine(person.id);
             //Console.WriteLine(person.name);
-            //Student student1 = TransObj<Person,Student>.TransToVersion2(p);
+            Student student1 = TransObj<Person, Student>.Trans(p);
             //定义一个变量。
             //var e = Expression.New(typeof(Person));
             //ConstantExpression constant = Expression.Constant(10, typeof(int));
@@ -57,18 +57,37 @@ namespace TransConsoleApp5
 
 
 
-            ParameterExpression parameterExpression = Expression.Parameter(typeof(int), "i");
+            //ParameterExpression parameterExpression = Expression.Parameter(typeof(int), "i");
 
-            BinaryExpression binaryExpression = Expression.AddAssign(parameterExpression, parameterExpression);
+            //BinaryExpression binaryExpression = Expression.AddAssign(parameterExpression, parameterExpression);
 
-            var ex = Expression.Lambda<Func<int, int>>(binaryExpression, parameterExpression);
+            //var ex = Expression.Lambda<Func<int, int>>(binaryExpression, parameterExpression);
 
-            Func<int, int> lambdaExpression = Expression.Lambda<Func<int, int>>(binaryExpression, parameterExpression).Compile();
+            //Func<int, int> lambdaExpression = Expression.Lambda<Func<int, int>>(binaryExpression, parameterExpression).Compile();
+
+            ParameterExpression parameter = Expression.Parameter(typeof(Person), "p");
+            List<MemberExpression> memberList = new List<MemberExpression>();
+            List<MemberBinding> bindingList = new List<MemberBinding>();
+            foreach (var item in typeof(Person).GetProperties())
+            {
+                MemberExpression memberExpression = Expression.Property(parameter, item.Name);
+                Console.WriteLine(memberExpression.ToString());
+                MemberBinding binding = Expression.Bind(item, memberExpression);
+                Console.WriteLine(binding);
+                bindingList.Add(binding);
+                memberList.Add(memberExpression);
+            }
 
 
 
 
-            Console.WriteLine(lambdaExpression(10));
+
+
+
+
+
+
+            //Console.WriteLine(lambdaExpression(10));
 
             Console.ReadKey();
         }
